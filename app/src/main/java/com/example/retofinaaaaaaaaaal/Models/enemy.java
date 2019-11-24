@@ -16,7 +16,7 @@ public class enemy {
     public static final float GRAVITY_FORCE = 10;
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
-    private int type = 0; //0 enemy, 1 kid, 2 shield
+    private int type = 0; //0 heal,1 ship, 2 rock
     public int reload = 0;
     public static final int CADENCIA = 100;
 
@@ -37,10 +37,12 @@ public class enemy {
         isJumping = false;
         //Getting bitmap from resource
         Random rand = new Random();
-        int randomNum = rand.nextInt((1 - 0) + 1) + 0;
+        int randomNum = rand.nextInt((2 - 0) + 2) + 0;
         this.type = randomNum;
         Bitmap originalBitmap;
         if (randomNum == 0) {
+            originalBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.green_heart);
+        } else if (randomNum == 1) {
             originalBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.galagaship);
         } else {
             originalBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.e2_rock);
@@ -48,7 +50,7 @@ public class enemy {
         spritePerson = Bitmap.createScaledBitmap(originalBitmap, SPRITE_SIZE_WIDTH, SPRITE_SIZE_HEIGTH, false);
 
 
-        float randomY = +0;
+        float randomY = 0;
         positionX = screenWidth - spritePerson.getWidth();
         positionY = 0 + rand.nextFloat() * (screenHeigth - spritePerson.getHeight());
         this.maxX = screenWidth - (spritePerson.getWidth() / 2);

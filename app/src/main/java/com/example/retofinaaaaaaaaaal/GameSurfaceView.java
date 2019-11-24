@@ -1,7 +1,6 @@
 package com.example.retofinaaaaaaaaaal;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -32,6 +31,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     private int points = 0;
     private int velAppearence = 1;
     private int healPoints = 100;
+    private int enemiesAppear = 0;
+    private int invaders = 0;
+    private int levelMultiplier = 1;
 
     /**
      * Contructor
@@ -68,7 +70,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.BLACK);
             shotUpdateInfo();
             validatePlayerShotImpact();
-
+            generateStars();
             createEnemy();
             for (int _i = 0; _i < enemiesList.size(); _i++) {
                 enemy enemy = enemiesList.get(_i);
@@ -79,6 +81,14 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
                 validTouch(enemy);
                 if (enemy.getPositionX() == 0) {
                     enemiesList.remove(enemy);
+                    if (enemy.typePerson() != 0) {
+                        invaders++;
+                        if (points > 200) {
+                            points -= 200;
+                        } else {
+                            points = 0;
+                        }
+                    }
                 }
 //                paint.setColor(Color.RED);
 //                canvas.drawText("yi: " + enemy.getPositionY(), 300, 700, paint);
@@ -92,9 +102,10 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             float scaledSizeInPixels = spSize * getResources().getDisplayMetrics().scaledDensity;
             paintLetter.setColor(Color.YELLOW);
             paintLetter.setTextSize(scaledSizeInPixels);
-            canvas.drawText("Puntos: " + points, 200, 100, paintLetter);
+            canvas.drawText("Points: " + points, 200, 100, paintLetter);
             canvas.drawText("HP: " + healPoints, 200, 150, paintLetter);
-            //canvas.drawText("Level: " + velAppearence, 200, 400, paintLetter);
+            canvas.drawText("Level: " + levelMultiplier, 500, 100, paintLetter);
+            canvas.drawText("Invaders: " + invaders, 500, 150, paintLetter);
             //canvas.drawText("yi: " + player.getPositionY(), 300, 400, paintLetter);
             //canvas.drawText("yf: " + (player.getPositionY() + (float) player.getSpriteIcecreamCar().getHeight()), 300, 300, paintLetter);
 
@@ -116,7 +127,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         for (int _i = 0; _i < enemiesList.size(); _i++) {
 
             enemy enemy = enemiesList.get(_i);
-            if (enemy.typePerson() == 0 && enemy.reload == 0) {
+            if (enemy.typePerson() == 1 && enemy.reload == 0) {
                 enemiesShotsList.add(new Shot(context, screenWith, screenHeight, enemy.getPositionX() + enemy.getSpritePerson().getWidth() * 1 / 8, enemy.getPositionY() + enemy.getSpritePerson().getHeight() / 2, 1));
             }
         }
@@ -203,20 +214,31 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
         if (randomNum <= velAppearence) {
             enemiesList.add(new enemy(context, screenWith, screenHeight));
+            enemiesAppear++;
+
+            if (enemiesAppear >= levelMultiplier * 10) {
+                enemiesAppear = 0;
+                levelMultiplier++;
+                velAppearence += 1;
+            }
         }
         //}
     }
 
     public void validTouch(enemy enemy) {
         if (validateCrash(enemy)) {
-            healPoints = 0;
-            if (points > 15) {
-                points = points - 15;
+            if (enemy.typePerson() == 0) {
+                if (healPoints + 10 >= 100) {
+                    healPoints = 100;
+                } else {
+                    healPoints += 10;
+                }
+                enemiesList.remove(enemy);
             } else {
-                points = 0;
+                healPoints = 0;
+                enemiesList.remove(enemy);
+                player.nowIsDead(context);
             }
-            enemiesList.remove(enemy);
-            player.nowIsDead(context);
         }
     }
 
@@ -233,14 +255,27 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     }
 
 
+    public void generateStars() {
+
+        Random rand = new Random();
+        float randomY = rand.nextFloat() * (screenHeight);
+        float randomX = rand.nextFloat() * (screenWith);
+        Paint paintStar = new Paint();
+        paintStar.setColor(Color.WHITE);
+        canvas.drawRect(randomX, randomY, randomX + 25, randomY + 5, paintStar);
+    }
+
+
     public void validatePlayerShotImpact() {
         for (int _i = 0; _i < enemiesList.size(); _i++) {
-            for (int _j = 0; _j < playerShotsList.size(); _j++) {
-                if (validateCrashInX(enemiesList.get(_i), playerShotsList.get(_j))) {
-                    if (validateCrashInY(enemiesList.get(_i), playerShotsList.get(_j))) {
-                        enemiesList.get(_i).nowIsDead(context);
-                        playerShotsList.remove(playerShotsList.get(_j));
-                        points += 100;
+            if (!(levelMultiplier >= 5 && enemiesList.get(_i).typePerson() == 0)) {
+                for (int _j = 0; _j < playerShotsList.size(); _j++) {
+                    if (validateCrashInX(enemiesList.get(_i), playerShotsList.get(_j))) {
+                        if (validateCrashInY(enemiesList.get(_i), playerShotsList.get(_j))) {
+                            enemiesList.get(_i).nowIsDead(context);
+                            playerShotsList.remove(playerShotsList.get(_j));
+                            points += 100;
+                        }
                     }
                 }
             }
@@ -370,3 +405,4 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
 
 }
+
