@@ -80,10 +80,10 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
                 if (enemy.getPositionX() == 0) {
                     enemiesList.remove(enemy);
                 }
-                paint.setColor(Color.RED);
-                canvas.drawText("yi: " + enemy.getPositionY(), 300, 700, paint);
-                canvas.drawText("yf: " + enemy.getPositionY() + enemy.getSpritePerson().getHeight(), 350, 750, paint);
-                canvas.drawRect(enemy.getPositionX(), enemy.getPositionY(), enemy.getPositionX() + enemy.getSpritePerson().getWidth(), enemy.getPositionY() + enemy.getSpritePerson().getHeight(), paint);
+//                paint.setColor(Color.RED);
+//                canvas.drawText("yi: " + enemy.getPositionY(), 300, 700, paint);
+//                canvas.drawText("yf: " + (enemy.getPositionY() + (float) enemy.getSpritePerson().getHeight()), 350, 750, paint);
+//                canvas.drawRect(enemy.getPositionX(), enemy.getPositionY(), enemy.getPositionX() + (float) enemy.getSpritePerson().getWidth(), enemy.getPositionY() + (float) enemy.getSpritePerson().getHeight(), paint);
                 canvas.drawBitmap(enemy.getSpritePerson(), enemy.getPositionX(), enemy.getPositionY(), paint);
             }
 
@@ -95,11 +95,11 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             canvas.drawText("Puntos: " + points, 200, 100, paintLetter);
             canvas.drawText("HP: " + healPoints, 200, 150, paintLetter);
             //canvas.drawText("Level: " + velAppearence, 200, 400, paintLetter);
-            canvas.drawText("yi: " + player.getPositionY(), 300, 400, paintLetter);
-            canvas.drawText("yf: " + player.getPositionY() + player.getSpriteIcecreamCar().getHeight(), 300, 300, paintLetter);
+            //canvas.drawText("yi: " + player.getPositionY(), 300, 400, paintLetter);
+            //canvas.drawText("yf: " + (player.getPositionY() + (float) player.getSpriteIcecreamCar().getHeight()), 300, 300, paintLetter);
 
-            paint.setColor(Color.GREEN);
-            canvas.drawRect(player.getPositionX(), player.getPositionY(), player.getPositionX() + player.getSpriteIcecreamCar().getWidth(), player.getPositionY() + player.getSpriteIcecreamCar().getHeight(), paint);
+//            paint.setColor(Color.GREEN);
+//            canvas.drawRect(player.getPositionX(), player.getPositionY(), player.getPositionX() + (float) player.getSpriteIcecreamCar().getWidth(), player.getPositionY() + (float) player.getSpriteIcecreamCar().getHeight(), paint);
             canvas.drawBitmap(player.getSpriteIcecreamCar(), player.getPositionX(), player.getPositionY(), paint);
             holder.unlockCanvasAndPost(canvas);
         }
@@ -197,14 +197,14 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     }
 
     private void createEnemy() {
-        if (enemiesList.size() < 1) {
-            Random rand = new Random();
-            int randomNum = rand.nextInt((100 - 0) + 1) + 0;
+        //if (enemiesList.size() < 1) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((100 - 0) + 1) + 0;
 
-            if (randomNum <= velAppearence) {
-                enemiesList.add(new enemy(context, screenWith, screenHeight));
-            }
+        if (randomNum <= velAppearence) {
+            enemiesList.add(new enemy(context, screenWith, screenHeight));
         }
+        //}
     }
 
     public void validTouch(enemy enemy) {
@@ -266,7 +266,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     }
 
     public boolean validateCrashInX(Shot shot) {
-        if (player.getPositionX() >= shot.getPositionX() + 20) {
+        if (player.getPositionX() + player.getSpriteIcecreamCar().getWidth() >= shot.getPositionX()) {
             return true;
         }
         return false;
@@ -275,20 +275,20 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     public boolean validateCrashInY(Shot shot) {
         float bottomShot = shot.getPositionY() + 10;
         float topShot = shot.getPositionY();
-        float bottomPlayer = player.getPositionY() + player.getSpriteIcecreamCar().getHeight();
+        float bottomPlayer = (player.getPositionY() + (float) player.getSpriteIcecreamCar().getHeight());
         float topPlayer = player.getPositionY();
-        if (topPlayer <= topShot) {
-            if (topPlayer >= bottomShot) {
-                return true;
-            }
-        }
         if (topPlayer >= topShot) {
-            if (bottomPlayer <= bottomShot) {
+            if (topPlayer <= bottomShot) {
                 return true;
             }
         }
-        if (bottomPlayer <= topShot) {
+        if (topPlayer <= topShot) {
             if (bottomPlayer >= bottomShot) {
+                return true;
+            }
+        }
+        if (bottomPlayer >= topShot) {
+            if (bottomPlayer <= bottomShot) {
                 return true;
             }
         }
@@ -304,22 +304,22 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     }
 
     public boolean validateCrashInY(enemy enemy, Shot shot) {
-        float bottomEnemy = enemy.getPositionY() + enemy.getSpritePerson().getHeight();
+        float bottomEnemy = (enemy.getPositionY() + (float) enemy.getSpritePerson().getHeight());
         float topEnemy = enemy.getPositionY();
         float bottomShot = shot.getPositionY() + 10;
         float topShot = shot.getPositionY();
-        if (topShot <= topEnemy) {
-            if (topShot >= bottomEnemy) {
-                return true;
-            }
-        }
         if (topShot >= topEnemy) {
-            if (bottomShot <= bottomEnemy) {
+            if (topShot <= bottomEnemy) {
                 return true;
             }
         }
         if (topShot <= topEnemy) {
             if (bottomShot >= bottomEnemy) {
+                return true;
+            }
+        }
+        if (topShot >= topEnemy) {
+            if (bottomShot <= bottomEnemy) {
                 return true;
             }
         }
@@ -334,22 +334,34 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     }
 
     public boolean validateCrashInY(enemy enemy) {
-        float bottomEnemy = enemy.getPositionY() + enemy.getSpritePerson().getHeight();
+        float bottomEnemy = (enemy.getPositionY() + (float) enemy.getSpritePerson().getHeight());
         float topEnemy = enemy.getPositionY();
-        float bottomPlayer = player.getPositionY() + player.getSpriteIcecreamCar().getHeight();
+        float bottomPlayer = (player.getPositionY() + (float) player.getSpriteIcecreamCar().getHeight());
         float topPlayer = player.getPositionY();
-        if (topPlayer <= topEnemy) {
-            if (topPlayer >= bottomEnemy) {
-                return true;
-            }
-        }
+
+//        Paint paintLetter = new Paint();
+//        int spSize = 17;
+//        float scaledSizeInPixels = spSize * getResources().getDisplayMetrics().scaledDensity;
+//        paintLetter.setColor(Color.YELLOW);
+//        paintLetter.setTextSize(scaledSizeInPixels);
+//        canvas.drawText("yi: " + topPlayer, 300, 400, paintLetter);
+//        canvas.drawText("yf: " + bottomPlayer, 300, 500, paintLetter);
+//        canvas.drawText("yi: " + topEnemy, 300, 600, paintLetter);
+//        canvas.drawText("yf: " + bottomEnemy, 300, 700, paintLetter);
+
+
         if (topPlayer >= topEnemy) {
-            if (bottomPlayer <= bottomEnemy) {
+            if (topPlayer <= bottomEnemy) {
                 return true;
             }
         }
-        if (bottomPlayer <= topEnemy) {
+        if (topPlayer <= topEnemy) {
             if (bottomPlayer >= bottomEnemy) {
+                return true;
+            }
+        }
+        if (bottomPlayer >= topEnemy) {
+            if (bottomPlayer <= bottomEnemy) {
                 return true;
             }
         }

@@ -11,7 +11,7 @@ public class player {
 
     public static final float INIT_X = 100;
     public static final float INIT_Y = 100;
-    public static final int CADENCIA = 20;
+    public static final int CADENCIA = 10;
     public static final int SPRITE_SIZE_WIDTH = 300;
     public static final int SPRITE_SIZE_HEIGTH = 200;
     public static final float GRAVITY_FORCE = 10;
