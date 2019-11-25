@@ -17,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        soundPlayer = new SoundPlayer(this);
+        soundPlayer.playImperialSound();
+
      }
 
     public void playGame (View view){
