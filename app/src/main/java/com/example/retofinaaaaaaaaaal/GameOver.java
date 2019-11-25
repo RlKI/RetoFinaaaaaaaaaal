@@ -24,7 +24,5 @@ public class GameOver extends AppCompatActivity {
                 startActivity(new Intent(GameOver.this, GamePlay.class));
             }
         });
-
-
     }
 }

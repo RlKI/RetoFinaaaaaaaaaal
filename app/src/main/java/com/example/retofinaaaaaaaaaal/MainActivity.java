@@ -17,14 +17,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        soundPlayer = new SoundPlayer(this);
-
      }
 
     public void playGame (View view){
         startActivity(new Intent(this, GamePlay.class));
-        soundPlayer.playImperialSound();
-
     }
 
 }

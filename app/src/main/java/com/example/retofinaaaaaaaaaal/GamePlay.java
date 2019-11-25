@@ -10,12 +10,9 @@ import android.view.Display;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.Sound.SoundPlayer;
-
 public class GamePlay extends AppCompatActivity {
 
     private GameSurfaceView gameSurfaceView;
-    private SoundPlayer soundPlayer;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -29,9 +26,6 @@ public class GamePlay extends AppCompatActivity {
 
         gameSurfaceView = new GameSurfaceView(this, screenSize.x, screenSize.y);
         setContentView(gameSurfaceView);
-
-        soundPlayer = new SoundPlayer(this);
-
     }
     @Override
     protected void onPause() {
