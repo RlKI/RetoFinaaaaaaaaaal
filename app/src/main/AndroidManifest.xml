@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/e1_milleniumfalcon"
         android:supportsRtl="true"
         android:theme="@style/StarWarsTheme">
-        <activity android:name=".GamePlay"></activity>
+        <activity android:name=".GameOver"></activity>
+        <activity android:name=".GamePlay" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

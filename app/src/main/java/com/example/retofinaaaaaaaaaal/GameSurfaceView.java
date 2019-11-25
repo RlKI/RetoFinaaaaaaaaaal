@@ -35,6 +35,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     private int invaders = 0;
     private int levelMultiplier = 1;
 
+
     /**
      * Contructor
      *
@@ -61,7 +62,6 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             }
         }
 
-
     }
 
     private void paintFrame() {
@@ -84,6 +84,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
                     if (enemy.typePerson() != 0) {
                         invaders++;
                         if (points > 200) {
+
                             points -= 200;
                         } else {
                             points = 0;
@@ -163,9 +164,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             //canvas.drawBitmap(shot.getSpriteIcecreamCar(), shot.getPositionX(), shot.getPositionY(), paint);
         }
 
-
     }
-
 
     public void pause() {
         isPlaying = false;

@@ -28,7 +28,6 @@ public class GamePlay extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -40,7 +39,5 @@ public class GamePlay extends AppCompatActivity {
         super.onResume();
         gameSurfaceView.resume();
     }
-
-
 
 }
