@@ -1,6 +1,7 @@
 package com.example.retofinaaaaaaaaaal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,12 +9,14 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.Sound.SoundPlayer;
 import com.example.retofinaaaaaaaaaal.Models.Shot;
 import com.example.retofinaaaaaaaaaal.Models.enemy;
 import com.example.retofinaaaaaaaaaal.Models.player;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 
 public class GameSurfaceView extends SurfaceView implements Runnable {
     private boolean isPlaying;
@@ -34,7 +37,6 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     private int enemiesAppear = 0;
     private int invaders = 0;
     private int levelMultiplier = 1;
-
 
     /**
      * Contructor
@@ -59,6 +61,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             paintFrame();
             if (player.isDead) {
                 stop();
+
             }
         }
 
@@ -182,6 +185,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 
     public void resume() {
@@ -401,7 +405,6 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         }
         return false;
     }
-
 
 }
 
