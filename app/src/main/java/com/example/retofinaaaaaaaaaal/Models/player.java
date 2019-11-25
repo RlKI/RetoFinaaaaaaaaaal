@@ -52,6 +52,16 @@ public class player {
 
     }
 
+    public void revive(Context context) {
+        isDead = false;
+        Bitmap originalBitmap;
+        originalBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.e1_milleniumfalcon);
+
+        spriteIcecreamCar = Bitmap.createScaledBitmap(originalBitmap, SPRITE_SIZE_WIDTH, SPRITE_SIZE_HEIGTH, false);
+
+    }
+
+
     public static float getInitX() {
         return INIT_X;
     }

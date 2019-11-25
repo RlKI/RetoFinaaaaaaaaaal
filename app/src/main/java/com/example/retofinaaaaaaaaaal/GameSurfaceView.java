@@ -177,13 +177,17 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     }
 
     public void stop() {
-        isPlaying = false;
-        try {
-            gameplayThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
+        enemiesList = new ArrayList<>();
+        playerShotsList = new ArrayList<>();
+        enemiesShotsList = new ArrayList<>();
+        points = 0;
+        velAppearence = 1;
+        healPoints = 100;
+        enemiesAppear = 0;
+        invaders = 0;
+        levelMultiplier = 1;
+        player.revive(context);
     }
 
     public void resume() {
