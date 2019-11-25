@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.example.Sound.SoundPlayer;
 
-
 public class MainActivity extends AppCompatActivity {
 
     private SoundPlayer soundPlayer;
@@ -19,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         soundPlayer = new SoundPlayer(this);
-
 
      }
 

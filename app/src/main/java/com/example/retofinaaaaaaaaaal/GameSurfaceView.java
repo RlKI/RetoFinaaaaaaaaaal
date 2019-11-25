@@ -1,7 +1,6 @@
 package com.example.retofinaaaaaaaaaal;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,7 +8,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.Sound.SoundPlayer;
 import com.example.retofinaaaaaaaaaal.Models.Shot;
 import com.example.retofinaaaaaaaaaal.Models.enemy;
 import com.example.retofinaaaaaaaaaal.Models.player;
